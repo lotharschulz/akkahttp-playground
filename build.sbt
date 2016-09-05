@@ -11,10 +11,11 @@ scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-Xlint"
 javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
 
 libraryDependencies ++= {
-  val akkaV       = "2.4.3"
+  val akkaV      = "2.4.3"
   val scalaTestV = "2.2.6"
   Seq(
     "com.typesafe.akka" %% "akka-http-core" % "2.4.7"
+    ,"com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.9"
     //,"com.typesafe.akka" %% "akka-http-experimental" % "2.4.7"
     //,"com.typesafe.akka" %% "akka-actor" % "2.4.0"
     ,"com.typesafe.akka" %% "akka-http-testkit" % akkaV
