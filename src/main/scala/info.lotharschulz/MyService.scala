@@ -2,17 +2,33 @@ package info.lotharschulz
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
+import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import scala.io.StdIn
 
+final case class Hello(msg: String)
+
+// collect your json format instances into a support trait:
+trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
+  implicit val helloFormat = jsonFormat1(Hello) // contains List[Item]
+}
+
 object MyService {
   val theroute =
     path("hello") {
+      post {
+        entity(as[Hello]) {
+          hello: Hello => complete {
+            s"hello's msg: ${hello.msg}"
+          }
+        }
+      } ~
       get {
         complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<p>hi akka http</p>"))
       }
