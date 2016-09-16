@@ -12,8 +12,12 @@ javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation")
 
 libraryDependencies ++= {
   Seq(
-    "com.typesafe.akka" %% "akka-http-core" % "2.4.10"
-    ,"com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.9"
+    // http://stackoverflow.com/a/34570734
+    "org.scala-lang" % "scala-reflect" % "2.11.8"
+    ,"org.scala-lang.modules" % "scala-xml_2.11" % "1.0.4"
+    
+    ,"com.typesafe.akka" %% "akka-http-core" % "2.4.10"
+    ,"com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.10"
     //,"com.typesafe.akka" %% "akka-http-experimental" % "2.4.7"
     //,"com.typesafe.akka" %% "akka-actor" % "2.4.0"
     ,"com.typesafe.akka" %% "akka-http-testkit" % "2.4.3"

@@ -25,7 +25,7 @@ object MyService extends Directives with JsonSupport {
       post {
         entity(as[Hello]) {
           hello: Hello => complete {
-            s"hello's msg: ${hello.msg}"
+            s"hello msg: ${hello.msg}"
           }
         }
       } ~

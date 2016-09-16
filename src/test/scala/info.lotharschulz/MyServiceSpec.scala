@@ -14,21 +14,41 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
   "MyServiceSpec get" should "return my msg" in {
     Get("/hello") ~> Route.seal(route) ~> check {
       status === StatusCodes.OK
-      //contentType === ContentTypes.`text/html(UTF-8)`
       contentType === ContentTypes.`application/json`
+      // https://groups.google.com/forum/#!topic/scalatra-user/I_vPKT-twRY
       entityAs[String] shouldEqual "{\"msg\":\"my msg\"}"
     }
   }
 
   "MyServiceSpec post" should "should return a hello msg" in {
-    Post("/hello", "new msg") ~> Route.seal(route) ~> check{
+    
+    /*
+        val jsonRequest = ByteString(
+      s"""
+         |{
+         |    "msg":"bla"
+         |}
+        """.stripMargin)
+    
+    
+    Post(uri = "/hello", entity = HttpEntity(MediaTypes.`application/json`, jsonRequest)) ~> Route.seal(route) ~> check{
+
+     */
+    
+    Post("/hello", """{"msg":"bla"}""") ~> Route.seal(route) ~> check{
       status === StatusCodes.Created
       contentType === ContentTypes.`application/json`
       // @TODO test content payload
-      // entityAs[String] shouldEqual "hello's msg: new msg"
+      //entityAs[String] shouldEqual "hello msg: new msg"
     }
   }
 
+  "MyServiceSpec put" should "return a MethodNotAllowed" in {
+    Put() ~> Route.seal(route) ~> check {
+      status === StatusCodes.MethodNotAllowed
+    }
+  }
+  
   override protected def afterAll():Unit = {
     Await.ready(system.terminate(), Duration.Inf)
     super.afterAll()
