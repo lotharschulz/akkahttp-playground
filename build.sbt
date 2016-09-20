@@ -18,8 +18,6 @@ libraryDependencies ++= {
     
     ,"com.typesafe.akka" %% "akka-http-core" % "2.4.10"
     ,"com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.10"
-    //,"com.typesafe.akka" %% "akka-http-experimental" % "2.4.7"
-    //,"com.typesafe.akka" %% "akka-actor" % "2.4.0"
     ,"com.typesafe.akka" %% "akka-http-testkit" % "2.4.3"
     ,"org.scalatest" %% "scalatest" % "2.2.6"
   )
