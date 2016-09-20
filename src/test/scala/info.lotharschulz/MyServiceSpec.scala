@@ -1,6 +1,6 @@
 package info.lotharschulz
 
-import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
+import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import info.lotharschulz.MyService.MyService
@@ -15,7 +15,6 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
     Get("/hello") ~> Route.seal(route) ~> check {
       status === StatusCodes.OK
       contentType === ContentTypes.`application/json`
-      // https://groups.google.com/forum/#!topic/scalatra-user/I_vPKT-twRY
       entityAs[String] shouldEqual "{\"msg\":\"my msg\"}"
     }
   }
@@ -29,17 +28,17 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
          |    "msg":"bla"
          |}
         """.stripMargin)
-    
-    
     Post(uri = "/hello", entity = HttpEntity(MediaTypes.`application/json`, jsonRequest)) ~> Route.seal(route) ~> check{
+    */
 
-     */
-    
-    Post("/hello", """{"msg":"bla"}""") ~> Route.seal(route) ~> check{
+    val formData = FormData(("msg", "bla")).toEntity
+    val headers = Nil
+    val httpRequest = HttpRequest(HttpMethods.POST, "/hello", headers, formData) 
+    httpRequest ~> Route.seal(route) ~> check{
       status === StatusCodes.Created
       contentType === ContentTypes.`application/json`
       // @TODO test content payload
-      //entityAs[String] shouldEqual "hello msg: new msg"
+      // entityAs[String] shouldEqual "hello msg: new msg"
     }
   }
 
