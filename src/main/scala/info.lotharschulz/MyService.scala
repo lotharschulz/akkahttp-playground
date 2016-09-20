@@ -3,10 +3,11 @@ package info.lotharschulz
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives
 import akka.stream.ActorMaterializer
 import spray.json.{CompactPrinter, DefaultJsonProtocol}
+
+// import spray.json.JsValue
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
@@ -28,6 +29,11 @@ object MyService extends Directives with JsonSupport {
             s"hello msg: ${hello.msg}"
           }
         }
+        /*
+        entity(as[JsValue]) {
+          json => complete (s"hello msg: ${json.asJsObject.fields("msg")}")
+        }
+        */
       } ~
       get {
         complete(Hello("my msg"))

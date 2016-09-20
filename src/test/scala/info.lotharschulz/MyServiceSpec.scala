@@ -3,7 +3,6 @@ package info.lotharschulz
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import akka.util.ByteString
 import info.lotharschulz.MyService.MyService
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
@@ -29,6 +28,7 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
       status === StatusCodes.Created
       contentType === ContentTypes.`application/json`
       entityAs[String] shouldEqual "hello msg: bla"
+      //entityAs[String] shouldEqual "hello msg: \"bla\""
     }
   }
 
