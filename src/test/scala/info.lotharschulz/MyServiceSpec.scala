@@ -3,6 +3,7 @@ package info.lotharschulz
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
+import akka.util.ByteString
 import info.lotharschulz.MyService.MyService
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
@@ -20,25 +21,21 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
   }
 
   "MyServiceSpec post" should "should return a hello msg" in {
-    
-    /*
-        val jsonRequest = ByteString(
+    val jsonRequest = ByteString(
       s"""
          |{
          |    "msg":"bla"
          |}
         """.stripMargin)
-    Post(uri = "/hello", entity = HttpEntity(MediaTypes.`application/json`, jsonRequest)) ~> Route.seal(route) ~> check{
-    */
-
-    val formData = FormData(("msg", "bla")).toEntity
-    val headers = Nil
-    val httpRequest = HttpRequest(HttpMethods.POST, "/hello", headers, formData) 
+    
+    val httpRequest = HttpRequest(
+      method = HttpMethods.POST, 
+      uri = "/hello",
+      entity = HttpEntity(MediaTypes.`application/json`, jsonRequest)) 
     httpRequest ~> Route.seal(route) ~> check{
       status === StatusCodes.Created
       contentType === ContentTypes.`application/json`
-      // @TODO test content payload
-      // entityAs[String] shouldEqual "hello msg: new msg"
+      entityAs[String] shouldEqual "hello msg: bla"
     }
   }
 
