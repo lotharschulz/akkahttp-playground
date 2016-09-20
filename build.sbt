@@ -23,6 +23,27 @@ libraryDependencies ++= {
   )
 }
 
+enablePlugins(JavaAppPackaging)
+
+enablePlugins(DockerPlugin)
+
+maintainer in Docker := "akka http playground"
+
+packageSummary in Docker := "akka http example"
+
+packageDescription := "akka http example"
+
+packageName in Docker := "akka-http-example"
+
+version in Docker := "red"
+
+dockerBaseImage := "abigail/scala"
+
+dockerExposedPorts := Seq(8080)
+
+dockerRepository := Some("lotharschulz")
+
+
 pomExtra :=
   <scm>
     <url>https://github.com/lotharschulz/akkahttp-playground</url>

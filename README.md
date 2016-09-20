@@ -9,3 +9,8 @@ sbt [clean] test
 ```
 sbt "run-main info.lotharschulz.MyService"
 ```
+
+### docker create image
+```
+sbt docker:publishLocal
+```
