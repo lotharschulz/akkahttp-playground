@@ -27,9 +27,9 @@ libraryDependencies ++= {
 
 pomExtra :=
   <scm>
-    <url>https://github.com/lotharschulz/armstrongNumbers</url>
-    <connection>scm:git:github.com/lotharschulz/armstrongNumbers.git</connection>
-    <developerConnection>scm:git:https://github.com/lotharschulz/armstrongNumbers.git</developerConnection>
+    <url>https://github.com/lotharschulz/akkahttp-playground</url>
+    <connection>scm:git:github.com/lotharschulz/akkahttp-playground.git</connection>
+    <developerConnection>scm:git:https://github.com/lotharschulz/akkahttp-playground.git</developerConnection>
   </scm>
     <developers>
       <developer>
