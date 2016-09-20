@@ -21,17 +21,10 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
   }
 
   "MyServiceSpec post" should "should return a hello msg" in {
-    val jsonRequest = ByteString(
-      s"""
-         |{
-         |    "msg":"bla"
-         |}
-        """.stripMargin)
-    
     val httpRequest = HttpRequest(
       method = HttpMethods.POST, 
       uri = "/hello",
-      entity = HttpEntity(MediaTypes.`application/json`, jsonRequest)) 
+      entity = HttpEntity(MediaTypes.`application/json`, """{"msg":"bla"}""")) 
     httpRequest ~> Route.seal(route) ~> check{
       status === StatusCodes.Created
       contentType === ContentTypes.`application/json`
