@@ -25,23 +25,21 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
 object MyService extends Directives with JsonSupport {
   val theroute =
     path("hello") {
-      logRequest("api/dict/rules", Logging.DebugLevel) {
-        post {
-          entity(as[Hello]) {
-            hello: Hello => complete {
-              s"hello msg: ${hello.msg}"
-            }
+      post {
+        entity(as[Hello]) {
+          hello: Hello => complete {
+            s"hello msg: ${hello.msg}"
           }
-          /*
-        entity(as[JsValue]) {
-          json => complete (s"hello msg: ${json.asJsObject.fields("msg")}")
         }
-        */
-        } ~
-          get {
-            complete(Hello("my msg"))
-          }
+        /*
+      entity(as[JsValue]) {
+        json => complete (s"hello msg: ${json.asJsObject.fields("msg")}")
       }
+      */
+      } ~
+        get {
+          complete(Hello("my msg"))
+        }
     }
 
   def main(args: Array[String]) {
