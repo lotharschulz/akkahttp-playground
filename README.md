@@ -5,17 +5,38 @@
 sbt [clean] test
 ```
 
-### run 
+### run scala code
 ```
 sbt "run-main info.lotharschulz.MyService"
 ```
 
-### docker create image
+### docker
+
+#### docker create image
 ```
 sbt docker:publishLocal
 ```
 
-#### create & push docker base image java 8
+#### docker run local image
+```
+docker run -dit -p 8181:8181 --name akkahttp-playground lotharschulz/akkahttp-playground:0.0.1
+sbt docker:publishLocal && docker run -dit -p 8181:8181 --name akkahttp-playground lotharschulz/akkahttp-playground:0.0.1
+```
+
+#### test the running service
+```curl http://localhost:8181/hello``` should return something like ```{"msg":"my msg"}```  
+
+#### docker stop local image
+```
+docker stop akkahttp-playground
+```
+
+#### docker remove local image
+```
+docker rm akkahttp-playground
+```
+
+##### create & push docker base image java08
 create:
 ```
 cd base/docker/java
@@ -30,7 +51,7 @@ docker push lotharschulz/java08:[tag]
 docker push lotharschulz/java08:0.0.2
 ```
 
-#### create & push docker base image scala
+##### create & push docker base image scala
 create:
 ```
 cd base/docker/scala

@@ -47,9 +47,11 @@ object MyService extends Directives with JsonSupport {
     // needed for the future flatMap/onComplete in the end
     implicit val executionContext = system.dispatcher
 
-    val bindingFuture = Http().bindAndHandle(theroute, "localhost", 8080)
+    // "0.0.0.0" instead of "localhost" 'cause of
+    // http://stackoverflow.com/questions/27806631/docker-rails-app-fails-to-be-served-curl-56-recv-failure-connection-reset/27849860#27849860
+    val bindingFuture = Http().bindAndHandle(theroute, "0.0.0.0", 8181)
 
-    println(s"Server online at http://localhost:8080/hello")
+    println(s"Server online at http://localhost:8181/hello")
     StdIn.readLine("Hit ENTER to stop...") // let it run until user presses return
     //bindingFuture.flatMap(b => b.unbind()).onComplete(s => system.terminate())
     Await.ready(system.terminate(), Duration.Inf)
