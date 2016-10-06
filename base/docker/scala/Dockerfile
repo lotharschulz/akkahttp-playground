@@ -1,60 +1,50 @@
-# Scala on Java 8
-#
-# forked from: pulse00/scala
-#              - https://index.docker.io/u/pulse00/scala/
-#              - https://github.com/dubture-dockerfiles/scala
-#              - https://github.com/William-Yeh/docker-scala/edit/master/Dockerfile
-#
-# Version     0.
+# Scala based on Java 8
 
-FROM lotharschulz/java8
+FROM lotharschulz/java08:0.0.1
 MAINTAINER Lothar Schulz <mail@lothar-schulz.info>
 
-
 ENV SCALA_VERSION 2.11.8
-ENV SCALA_TARBALL http://www.scala-lang.org/files/archive/scala-$SCALA_VERSION.deb
-
+ENV SCALA_DEB http://www.scala-lang.org/files/archive/scala-$SCALA_VERSION.deb
+ENV SBT_VERSION 0.13.12
+ENV SBT_DEB http://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb
 
 RUN \
-    echo "==> Install curl helper tool..."  && \
-    apt-get update  && \
-    DEBIAN_FRONTEND=noninteractive  apt-get install -y --force-yes curl  && \
+    echo "==> Install curl helper tool..."                                        && \
+    apt-get -qq update                                                            && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --allow-downgrades curl && \
     \
     \
     \
     echo "===> install from Typesafe repo (contains old versions but they have all dependencies we need later on)"  && \
-    curl -sSL http://apt.typesafe.com/repo-deb-build-0002.deb  -o repo-deb.deb  && \
-    dpkg -i repo-deb.deb  && \
-    apt-get update        && \
+    curl -sSL http://apt.typesafe.com/repo-deb-build-0002.deb -o repo-deb.deb  && \
+    dpkg -i repo-deb.deb                                                       && \
+    apt-get -qq update                                                         && \
     \
     \
     \
-    echo "===> install Scala"  && \
+    echo "===> install Scala"                                && \
     DEBIAN_FRONTEND=noninteractive \
-        apt-get install -y --force-yes libjansi-java  && \
-    curl -sSL $SCALA_TARBALL -o scala.deb             && \
-    dpkg -i scala.deb                                 && \
+        apt-get install -y --allow-downgrades libjansi-java  && \
+    curl -sSL $SCALA_DEB -o scala.deb                        && \
+    dpkg -i scala.deb                                        && \
     \
     \
     \
-    echo "===> install sbt"     && \
-    RUN apt-get install -y sbt  && \
-    RUN wget http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.deb && \
-    RUN dpkg -i sbt.deb         && \
-    RUN rm -f sbt.deb           && \
+    echo "===> install sbt"                    && \
+    curl -L -o sbt-$SBT_VERSION.deb $SBT_DEB   && \
+    dpkg -i sbt-$SBT_VERSION.deb               && \
+    rm sbt-$SBT_VERSION.deb                    && \
+    apt-get -qq update                         && \
+    apt-get install                            && \
     \
     \
-    echo "===> clean up..."  && \
-    rm -f *.deb                            && \
-    apt-get remove -y --auto-remove curl   && \
-    apt-get clean                          && \
-    rm -rf /var/lib/apt/lists/*            && \
-
-# print versions & # scala -version returns code 1 instead of 0 thus "|| true"
-RUN \
+    \
+    echo "sbt version: "    && \
+    sbt about               && \
+    echo "java version: "   && \
     java -version           && \
-    scala -version || true  && \
-    sbt --version
+    echo "scala version: "  && \
+    scala -version || true
 
 # Define default command.
 CMD ["scala"]
