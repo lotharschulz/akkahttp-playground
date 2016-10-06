@@ -20,14 +20,14 @@ create:
 ```
 cd base/docker/java
 docker build -t lotharschulz/java08:[tag] -f Dockerfile .
-docker build -t lotharschulz/java08:0.0.1 -f Dockerfile .
+docker build -t lotharschulz/java08:0.0.2 -f Dockerfile .
 
 ```
 
 push:
 ```
 docker push lotharschulz/java08:[tag]
-docker push lotharschulz/java08:0.0.1
+docker push lotharschulz/java08:0.0.2
 ```
 
 #### create & push docker base image scala
@@ -35,12 +35,12 @@ create:
 ```
 cd base/docker/scala
 docker build -t lotharschulz/scala:[tag] -f Dockerfile .
-docker build -t lotharschulz/scala:0.0.1 -f Dockerfile .
+docker build -t lotharschulz/scala:0.0.2 -f Dockerfile .
 
 ```
 
 push:
 ```
 docker push lotharschulz/scala:[tag]
-docker push lotharschulz/scala:0.0.1
+docker push lotharschulz/scala:0.0.2
 ```
