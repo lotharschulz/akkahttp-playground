@@ -26,6 +26,14 @@ sbt docker:publishLocal && docker run -dit -p 8181:8181 --name akkahttp-playgrou
 #### test the running service
 ```curl http://localhost:8181/hello``` should return something like ```{"msg":"my msg"}```  
 
+##### check some logs
+```docker logs -f akkahttp-playground``` will follows the docker container logs. 
+Run ```curl http://localhost:8181/hello``` and experience logs like 
+```
+[my-system-akka.actor.default-dispatcher-4] [akka.actor.ActorSystemImpl(my-system)] HttpMethod(GET) http://localhost:8181/hello: 200 OK 
+entity: {"msg":"my msg"}
+``` 
+
 #### docker stop local image
 ```
 docker stop akkahttp-playground
