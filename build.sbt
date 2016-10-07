@@ -49,6 +49,6 @@ pomExtra :=
         <id>lotharschulz</id>
         <name>lothar</name>
         <email>mail[at]lothar[minus]schulz[dot]info</email>
-        <url>https://www.github.com/lotharschulz/</url>
+        <url>https://github.com/lotharschulz/</url>
       </developer>
     </developers>
