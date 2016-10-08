@@ -31,9 +31,11 @@ lazy val root = (project in file(".")).
     packageDescription := "akka http example",
     packageName in Docker := "akka-http-example",
     version in Docker := "0.0.1",
-    dockerBaseImage := "lotharschulz/scala:0.0.2",
+    //dockerBaseImage := "lotharschulz/scala:0.0.2",
+    dockerBaseImage := "localhost:5000/scala:0.0.2",
     dockerExposedPorts := Seq(8181),
-    dockerRepository := Some("lotharschulz"),
+    //dockerRepository := Some("lotharschulz"),
+    dockerRepository := Some("localhost:5000"),
     dockerUpdateLatest := false
   )
 
