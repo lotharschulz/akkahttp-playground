@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "akkahttpplaygroundname"
+  namespace: "default"
+spec:
+  containers:
+    - name: "akkahttp_playground"
+      image: "localhost:5000/akkahttp-playground:0.0.1"
+      imagePullPolicy: "Always"
+      ports:
+        - containerPort: 8181
+      resources:
+        cpu: "2"
+        memory: "1000"
+  imagePullSecrets:
+    - name: "myregistrykey"
