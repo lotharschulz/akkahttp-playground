@@ -42,6 +42,8 @@ entity: {"msg":"my msg"}
 ``` 
 docker push localhost:5000/akkahttp-playground:0.0.1
 ```
+combined docker create image, push to registry & run
+```sbt docker:publishLocal && sbt docker:publish && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.1 ```
 
 #### docker stop local image
 ```
