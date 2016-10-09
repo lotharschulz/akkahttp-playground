@@ -5,13 +5,13 @@ metadata:
   namespace: "default"
 spec:
   containers:
-    - name: "akkahttp_playground"
+    - name: "akkahttpplayground"
       image: "localhost:5000/akkahttp-playground:0.0.1"
       imagePullPolicy: "Always"
       ports:
         - containerPort: 8181
-      resources:
-        cpu: "2"
-        memory: "1000"
+      #resources:
+      #  cpu: "1"
+      #  memory: "50"
   imagePullSecrets:
-    - name: "myregistrykey"
+    - name: myregistrykey

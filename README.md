@@ -84,3 +84,14 @@ push:
 docker push localhost:5000/scala:[tag]
 docker push localhost:5000/scala:0.0.2
 ```
+
+### kubernetes
+
+#### minikube
+@TODO: link minikube description and install
+ 
+#### create a pod
+```kubectl create -f pod-config.yaml```
+
+#### delete a pod
+```kubectl delete pod akkahttpplaygroundname```
