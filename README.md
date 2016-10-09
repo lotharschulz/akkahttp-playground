@@ -95,3 +95,9 @@ docker push localhost:5000/scala:0.0.2
 
 #### delete a pod
 ```kubectl delete pod akkahttpplaygroundname```
+
+#### create a secret
+```kubectl create secret docker-registry myregistrykey --docker-server=localhost:5000 --docker-username=[someuser] --docker-password=[somepassword] --docker-email=[someemail]```
+
+#### delete a secret
+```kubectl delete secret myregistrykey```
