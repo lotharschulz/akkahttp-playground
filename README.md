@@ -1,4 +1,4 @@
-# akka http playground
+# akkahttp playground
 
 ### test
 ```
@@ -161,3 +161,6 @@ Containers:
 14s		10s		2	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal		Pulling		pulling image "localhost:5000/akkahttp-playground:0.0.1"
 14s		10s		2	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal		Pulled		Successfully pulled image "localhost:5000/akkahttp-playground:0.0.1"
 ```
+
+### blog post
+to come: http://www.lotharschulz.info/2016/10/13/akkahttp-docker-kubernetes/
