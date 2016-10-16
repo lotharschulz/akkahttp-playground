@@ -127,7 +127,7 @@ delete a secret:
 ## steps to deploy to minikube
 - ```minikube start```
 - ```eval $(minikube docker-env)```
-- ````docker run -d -p 5000:5000 --name registry registry:2```
+- ```docker run -d -p 5000:5000 --name registry registry:2```
 - ```cd base/docker/java/```
 - ```docker build -t localhost:5000/java08:0.0.2 -f Dockerfile .```
 - ```docker push localhost:5000/java08:0.0.2```
@@ -135,14 +135,20 @@ delete a secret:
 - ```docker build -t localhost:5000/scala:0.0.2 -f Dockerfile .```
 - ```docker push localhost:5000/scala:0.0.2```
 - ```cd ../../..```
-- ```sbt docker:publishLocal && sbt docker:publish &&
-docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.1 ```
+- ```sbt docker:publishLocal && sbt docker:publish && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.1```
 - ```kubectl get secrets```
+- ```docker login localhost:5000```
+---
+```
+Username (admin): [someuser]
+Password: [somepassword]
+Login Succeeded
+```
 - ```kubectl create secret docker-registry myregistrykey --docker-server=localhost:5000 --docker-username=[someuser] --docker-password=[somepassword] --docker-email=[someemail]```
 - ```kubectl get secrets```
 - ```kubectl create -f pod-config.yaml```
 - ```kubectl describe pods/akkahttpplaygroundname```
-- output like:
+--- output like:
 ```
 Name:		akkahttpplaygroundname
 Namespace:	default
@@ -157,9 +163,17 @@ Containers:
     Container ID:		docker://e638961e5dd9db76e30643523b20330afeac752ff76f9468f5cec6dfbd725275
     Image:			localhost:5000/akkahttp-playground:0.0.1
 ...
-14s		14s		1	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal		Started		Started container with docker id 134a080869a2
-14s		10s		2	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal		Pulling		pulling image "localhost:5000/akkahttp-playground:0.0.1"
-14s		10s		2	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal		Pulled		Successfully pulled image "localhost:5000/akkahttp-playground:0.0.1"
+26s	3s	3	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Pulling	pulling image "localhost:5000/akkahttp-playground:0.0.1"
+25s	3s	3	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Pulled	Successfully pulled image "localhost:5000/akkahttp-playground:0.0.1"
+3s	3s	1	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Created	Created container with docker id 5ac511bf78d3; Security:[seccomp=unconfined]
+3s	3s	1	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Started	Started container with docker id 5ac511bf78d3
+```
+- ```kubectl get po```
+- ```kubectl logs akkahttpplaygroundname```
+---
+```
+Server online at http://localhost:8181/hello
+Hit ENTER to stop...
 ```
 
 ### blog post
