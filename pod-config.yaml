@@ -3,11 +3,14 @@ kind: Pod
 metadata:
   name: "akkahttpplaygroundname"
   namespace: "default"
+  labels:
+    name: akkahttpplayground-pod
+    context: docker-k8s-lab
 spec:
   containers:
     - name: "akkahttpplayground"
       image: "localhost:5000/akkahttp-playground:0.0.1"
-      imagePullPolicy: "Always"
+      imagePullPolicy: "Never"
       ports:
         - containerPort: 8181
       #resources:
@@ -15,3 +18,18 @@ spec:
       #  memory: "50"
   imagePullSecrets:
     - name: myregistrykey
+apiVersion: v1
+kind: Service
+metadata:
+  name: "akkahttpplaygroundname"
+  labels:
+    name: akkahttpplayground-pod
+    context: docker-k8s-lab
+spec:
+  ports:
+    # the port that this service should serve on
+    - port: 8181
+  # label keys and values that must match in order to receive traffic for this service
+  selector:
+    name: akkahttpplayground-pod
+    context: docker-k8s-lab
