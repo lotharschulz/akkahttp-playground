@@ -1,5 +1,7 @@
 # akkahttp playground
 
+A sample project based on akkahttp, docker and minikube. This allows you to develop, debug deploy to a kubernetes environment on your local machine.
+
 ### test
 ```
 sbt [clean] test
