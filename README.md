@@ -136,11 +136,9 @@ export DOCKER_API_VERSION="1.23
 - ```eval $(minikube docker-env)```
 - ```docker run -d -p 5000:5000 --name registry registry:2```
 - ```cd base/docker/java/```
-- ```docker build -t localhost:5000/java08:0.0.2 -f Dockerfile .```
-- ```docker push localhost:5000/java08:0.0.2```
+- ```docker build -t localhost:5000/java08:0.0.2 -f Dockerfile . && docker push localhost:5000/java08:0.0.2```
 - ```cd ../scala/```
-- ```docker build -t localhost:5000/scala:0.0.2 -f Dockerfile .```
-- ```docker push localhost:5000/scala:0.0.2```
+- ```docker build -t localhost:5000/scala:0.0.2 -f Dockerfile . && docker push localhost:5000/scala:0.0.2```
 - ```cd ../../..```
 - ```sbt docker:publishLocal && sbt docker:publish && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.1```
 - ```kubectl get secrets```
