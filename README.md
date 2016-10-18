@@ -126,6 +126,13 @@ delete a secret:
 
 ## steps to deploy to minikube
 - ```minikube start```
+- ```minikube docker-env``` keep that output on clipboard for later use, I got
+ * ```
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/home/lothar/.minikube/certs"
+export DOCKER_API_VERSION="1.23
+```
 - ```eval $(minikube docker-env)```
 - ```docker run -d -p 5000:5000 --name registry registry:2```
 - ```cd base/docker/java/```
@@ -138,7 +145,7 @@ delete a secret:
 - ```sbt docker:publishLocal && sbt docker:publish && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.1```
 - ```kubectl get secrets```
 - ```docker login localhost:5000```
----
+ -
 ```
 Username (admin): [someuser]
 Password: [somepassword]
@@ -148,7 +155,7 @@ Login Succeeded
 - ```kubectl get secrets```
 - ```kubectl create -f pod-config.yaml```
 - ```kubectl describe pods/akkahttpplaygroundname```
---- output like:
+ - output like:
 ```
 Name:		akkahttpplaygroundname
 Namespace:	default
@@ -169,12 +176,36 @@ Containers:
 3s	3s	1	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Started	Started container with docker id 5ac511bf78d3
 ```
 - ```kubectl get po```
-- ```kubectl logs akkahttpplaygroundname```
----
+- ```kubectl logs akkahttpplaygroundname```  
+ *
 ```
 Server online at http://localhost:8181/hello
 Hit ENTER to stop...
 ```
+- now run ```curl -v http://192.168.99.100:8181/hello``` to access the akkahttp service
+ * outpup should be similar to
+```Hostname was NOT found in DNS cache
+ Trying 192.168.99.100...
+Connected to 192.168.99.100 (192.168.99.100) port 8181 (#0)
+> GET /hello HTTP/1.1
+> User-Agent: curl/7.35.0
+> Host: 192.168.99.100:8181
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+* Server akka-http/2.4.10 is not blacklisted
+< Server: akka-http/2.4.10
+< Date: Tue, 18 Oct 2016 08:34:39 GMT
+< Content-Type: application/json
+< Content-Length: 16
+<
+* Connection #0 to host 192.168.99.100 left intact```
+ * Q: why IP ```192.168.99.100``` and not ```localhost``` as the log output suggested?
+  * A: in order to be able to pull images from the local docker registry, the eval above was executed.
+    This applies for the complete local docker setup. Thats why the service is not available via
+    localhost, but another IP.
+
+- ```minikube delete``` to delete the whole k8s/minikube setup from your local machine
 
 ### blog post
 to come: http://www.lotharschulz.info/2016/10/13/akkahttp-docker-kubernetes/
