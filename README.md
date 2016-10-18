@@ -196,6 +196,7 @@ Connected to 192.168.99.100 (192.168.99.100) port 8181 (#0)
 < Content-Length: 16
 <
 * Connection #0 to host 192.168.99.100 left intact
+{"msg":"my msg"}
 ```  
 - Q: why IP ```192.168.99.100``` and not ```localhost``` as the kubectl logs output suggested?
  - A: in order to be able to pull images from the local docker registry, the eval command (3rd in sequence) above was executed.
