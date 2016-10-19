@@ -1,7 +1,6 @@
-FROM ubuntu:16.04
 # inspired by https://github.com/William-Yeh/docker-java8/blob/master/Dockerfile
 
-FROM lotharschulz/java08:0.0.1
+FROM ubuntu:16.04
 MAINTAINER Lothar Schulz <mail@lothar-schulz.info>
 
 RUN \
