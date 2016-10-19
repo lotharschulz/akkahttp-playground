@@ -95,15 +95,20 @@ docker push localhost:5000/scala:0.0.2
 
 #### minikube
 Minikube is a tool that makes it easy to run Kubernetes locally.
-```minikube delete``` to make sure the ```--insecure-registry```
-flag is honoured (https://github.com/kubernetes/minikube/issues/604#issuecomment-247813764)
 
-start with local insecure registry flag  
+start minikube
+```minikube start```
+start with local insecure registry flag - not needed for minikube use case
 ```minikube start --vm-driver="virtualbox" --host-only-cidr "192.168.59.3/24" --insecure-registry=localhost:5000```  
+
+```minikube delete``` to make sure the ```--insecure-registry``` flag is honoured (https://github.com/kubernetes/minikube/issues/604#issuecomment-247813764)
+
 check the cluster status    
 ```kubectl get cs```  
 dashboard
 ```minikube dashboard```   
+
+
 
 #### pods
 create a pod:  
