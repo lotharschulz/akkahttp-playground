@@ -5,8 +5,8 @@ A sample project based on akkahttp, docker and minikube. This allows you to deve
 
 [![Build Status](https://travis-ci.org/lotharschulz/akkahttp-playground.svg?branch=master)](https://travis-ci.org/lotharschulz/akkahttp-playground)
 [![Circle CI](https://circleci.com/gh/lotharschulz/akkahttp-playground.svg?style=svg)](https://circleci.com/gh/lotharschulz/akkahttp-playground)
-[![codecov.io](https://codecov.io/github/lotharschulz/akkahttp-playground/coverage.svg?branch=master)](https://codecov.io/github/lotharschulz/akkahttp-playground?branch=master)
-![codecov.io](http://codecov.io/github/lotharschulz/akkahttp-playground/branch.svg?branch=master)   
+<!-- [![codecov.io](https://codecov.io/github/lotharschulz/akkahttp-playground/coverage.svg?branch=master)](https://codecov.io/github/lotharschulz/akkahttp-playground?branch=master)  -->
+<!-- ![codecov.io](http://codecov.io/github/lotharschulz/akkahttp-playground/branch.svg?branch=master)   -->
 
 ### test
 ```
