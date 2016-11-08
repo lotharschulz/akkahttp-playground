@@ -1,6 +1,8 @@
 import com.typesafe.sbt.SbtNativePackager.autoImport._
 import sbt.Keys._
 
+resolvers += "Zalando Nexus" at "https://maven.zalando.net/content/groups/public/"
+
 libraryDependencies ++= {
   Seq(
     // http://stackoverflow.com/a/34570734
@@ -10,8 +12,16 @@ libraryDependencies ++= {
     ,"com.typesafe.akka" %% "akka-http-core" % "2.4.10"
     ,"com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.10"
     ,"com.typesafe.akka" %% "akka-http-testkit" % "2.4.3"
-    ,"org.scalatest" %% "scalatest" % "2.2.6"
+    ,"org.scalatest" %% "scalatest" % "3.0.0"
   )
+}
+
+publishTo := {
+  val nexus = "https://maven.zalando.org/"
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots/")
+  else
+    Some("releases"  at nexus + "content/repositories/releases/")
 }
 
 // http://stackoverflow.com/questions/34404558/intellij-idea-and-sbt-syntax-error/35232279#35232279
