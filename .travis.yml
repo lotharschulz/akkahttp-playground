@@ -1,0 +1,12 @@
+language: scala
+before_install:
+  - pip install --user codecov
+scala:
+   - 2.11.8
+jdk:
+  - oraclejdk8
+script: "sbt clean coverage test"
+#  - ./codacy-build.sh
+after_success:
+  - codecov
+- sbt coveralls
