@@ -1,6 +1,8 @@
 import com.typesafe.sbt.SbtNativePackager.autoImport._
 import sbt.Keys._
 
+lazy val scalacheck = "org.scalacheck" %% "scalacheck" % "1.12.0"
+
 libraryDependencies ++= {
   Seq(
     // http://stackoverflow.com/a/34570734
@@ -15,9 +17,9 @@ libraryDependencies ++= {
 }
 
 /*
-sbt -DdockerOrganization=                                 -DdockerName=                    -DdockerBImage=                            -DdockerRepo=                [sbt command]
-sbt -DdockerOrganization=pierone.stups.zalan.do/automata/ -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz    [sbt command]
-sbt -DdockerOrganization=info.lotharschulz                -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000  [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata/  [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                      [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                    [sbt command]
 */
 lazy val dockerOrg    = sys.props.getOrElse("dockerOrganization",  default = "info.lotharschulz")
 lazy val dockerName   = sys.props.getOrElse("dockerName",          default = "akkahttp-playground")
@@ -34,21 +36,55 @@ lazy val root = (project in file(".")).
     scalaVersion  := "2.11.8",
     version       := "0.0.1",
     scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-Xlint", "-Ywarn-adapted-args", "-Xfatal-warnings", "-feature"),
-    javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
+    javacOptions  := Seq("-Xlint:unchecked", "-Xlint:deprecation", "-source", "1.8", "-target", "1.8"),
+    //javaOptions   := Seq("-Xmx2G"),
 
     maintainer in Docker     := "Lothar Schulz <mail@lothar-schulz.info>",
     packageSummary in Docker := "akka http example",
     packageDescription       := "akka http example",
     packageName in Docker    := "akka-http-example",
     version in Docker        := "0.0.1",
-    //dockerBaseImage        := "lotharschulz/scala:0.0.2",
-    //dockerBaseImage        := "localhost:5000/scala:0.0.2",
     dockerBaseImage          := dockerBImage,
     dockerExposedPorts       := Seq(8181),
-    //dockerRepository       := Some("lotharschulz"),
-    //dockerRepository       := Some("localhost:5000"),
     dockerRepository         := Some(dockerRepo),
-    dockerUpdateLatest       := false
+    dockerUpdateLatest       := false,
+
+    // http://www.scala-sbt.org/release/docs/Basic-Def-Examples.html
+    libraryDependencies      += scalacheck % Test,
+    maxErrors                := 20,
+    pollInterval             := 1000,
+
+    initialCommands          := """
+                         |import System.{currentTimeMillis => now}
+                         |def time[T](f: => T): T = {
+                         |  val start = now
+                         |  try { f } finally { println("Elapsed: " + (now - start)/1000.0 + " s") }
+                         |}""".stripMargin,
+
+    mainClass in (Compile, packageBin) := Some("info.lotharschulz.MyService"),
+    mainClass in (Compile, run)        := Some("info.lotharschulz.MyService"),
+
+    ivyLoggingLevel          := UpdateLogging.Full,
+    shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " },
+    shellPrompt              := { state => System.getProperty("user.name") + "> " },
+    showTiming               := true,
+    showSuccess              := true,
+    crossPaths               := true,
+    fork                     := false,
+    fork in Test             := true,
+
+    logLevel in compile      := Level.Info, // Level.Warn
+    logLevel                 := Level.Info, // Level.Warn
+    persistLogLevel          := Level.Info, // Level.Warn
+
+    traceLevel               := 10,
+    traceLevel               := 0,
+    retrieveManaged          := true,
+
+    timingFormat             := {
+      import java.text.DateFormat
+      DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL)
+    }
   )
 
 

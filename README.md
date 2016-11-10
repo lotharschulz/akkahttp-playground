@@ -8,15 +8,24 @@ A sample project based on akkahttp, docker and minikube. This allows you to deve
 <!-- [![codecov.io](https://codecov.io/github/lotharschulz/akkahttp-playground/coverage.svg?branch=master)](https://codecov.io/github/lotharschulz/akkahttp-playground?branch=master)  -->
 <!-- ![codecov.io](http://codecov.io/github/lotharschulz/akkahttp-playground/branch.svg?branch=master)   -->
 
+### sbt variables
+default
+```
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                    [sbt command]
+```
+others 
+```
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                      [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata/  [sbt command]
+```
+
 ### test
 ```
 sbt [clean] test
 ```
 
 ### run scala code
-```
-sbt "run-main info.lotharschulz.MyService"
-```
+```sbt "run-main info.lotharschulz.MyService"```  or ```sbt run```
 
 ### docker
 
