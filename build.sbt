@@ -14,9 +14,11 @@ libraryDependencies ++= {
   )
 }
 
-// sbt -DdockerOrganization=                  -DdockerName=                    -DdockerBImage=                            -DdockerRepo=                [sbt command]
-// sbt -DdockerOrganization=info.lotharschulz -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz    [sbt command]
-// sbt -DdockerOrganization=info.lotharschulz -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000  [sbt command]
+/*
+sbt -DdockerOrganization=                                 -DdockerName=                    -DdockerBImage=                            -DdockerRepo=                [sbt command]
+sbt -DdockerOrganization=pierone.stups.zalan.do/automata/ -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz    [sbt command]
+sbt -DdockerOrganization=info.lotharschulz                -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000  [sbt command]
+*/
 lazy val dockerOrg    = sys.props.getOrElse("dockerOrganization",  default = "info.lotharschulz")
 lazy val dockerName   = sys.props.getOrElse("dockerName",          default = "akkahttp-playground")
 lazy val dockerBImage = sys.props.getOrElse("dockerBImage",        default = "localhost:5000/scala:0.0.2")
