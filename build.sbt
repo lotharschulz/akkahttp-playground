@@ -17,14 +17,17 @@ libraryDependencies ++= {
 }
 
 /*
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata   [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                      [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                    [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v0.0.1 -DversionInDocker=0.0.1 [sbt command]
 */
-lazy val dockerOrg    = sys.props.getOrElse("dockerOrganization",  default = "info.lotharschulz")
-lazy val dockerName   = sys.props.getOrElse("dockerName",          default = "akkahttp-playground")
-lazy val dockerBImage = sys.props.getOrElse("dockerBImage",        default = "localhost:5000/scala:0.0.2")
-lazy val dockerRepo   = sys.props.getOrElse("dockerRepo",          default = "localhost:5000/scala:0.0.2")
+lazy val dockerOrg          = sys.props.getOrElse("dockerOrganization",  default = "info.lotharschulz")
+lazy val dockerName         = sys.props.getOrElse("dockerName",          default = "akkahttp-playground")
+lazy val dockerBImage       = sys.props.getOrElse("dockerBImage",        default = "localhost:5000/scala:0.0.2")
+lazy val dockerRepo         = sys.props.getOrElse("dockerRepo",          default = "localhost:5000/scala:0.0.2")
+lazy val dockerImageVersion = sys.props.getOrElse("dockerImageVersion",  default = "0.0.1")
+lazy val versionInDocker    = sys.props.getOrElse("versionInDocker",     default = "0.0.1")
 
 // http://stackoverflow.com/questions/34404558/intellij-idea-and-sbt-syntax-error/35232279#35232279
 lazy val root = (project in file(".")).
@@ -34,7 +37,7 @@ lazy val root = (project in file(".")).
     organization  := dockerOrg,
     name          := dockerName,
     scalaVersion  := "2.11.8",
-    version       := "0.0.1",
+    version       := dockerImageVersion,
     scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-Xlint", "-Ywarn-adapted-args", "-Xfatal-warnings", "-feature"),
     javacOptions  := Seq("-Xlint:unchecked", "-Xlint:deprecation", "-source", "1.8", "-target", "1.8"),
     //javaOptions   := Seq("-Xmx2G"),
@@ -43,7 +46,7 @@ lazy val root = (project in file(".")).
     packageSummary in Docker := "akka http example",
     packageDescription       := "akka http example",
     packageName in Docker    := "akka-http-example",
-    version in Docker        := "0.0.1",
+    version in Docker        := versionInDocker,
     dockerBaseImage          := dockerBImage,
     dockerExposedPorts       := Seq(8181),
     dockerRepository         := Some(dockerRepo),
