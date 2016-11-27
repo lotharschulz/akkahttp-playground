@@ -17,10 +17,10 @@ libraryDependencies ++= {
 }
 
 /*
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
 sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v0.0.1 -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v1     -DversionInDocker=0.0.1 [sbt command]
 */
 lazy val dockerOrg          = sys.props.getOrElse("dockerOrganization",  default = "info.lotharschulz")
 lazy val dockerName         = sys.props.getOrElse("dockerName",          default = "akkahttp-playground")
