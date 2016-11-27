@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "akkahttpplayground-pod"
+  namespace: "default"
+spec:
+  containers:
+    - name: "akkahttpplayground-container"
+      image: "gcr.io/akkahttp-playground:v1"
+      imagePullPolicy: "Never"
+      ports:
+        - containerPort: 8181
