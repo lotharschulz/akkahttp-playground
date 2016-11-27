@@ -11,12 +11,25 @@ A sample project based on akkahttp, docker and minikube. This allows you to deve
 ### sbt variables
 default
 ```
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                    [sbt command]
+# local docker registry
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
 ```
 others 
 ```
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                      [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata/  [sbt command]
+# docker hub registry
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+# pierone docker registry
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+# google gcr docker registry
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v1     -DversionInDocker=0.0.1 [sbt command]
+```
+
+
+[sbt docker tasks](http://www.scala-sbt.org/sbt-native-packager/formats/docker.html#tasks):
+```
+docker:stage
+docker:publishLocal
+docker:publish
 ```
 
 ### test
@@ -115,7 +128,7 @@ start minikube
 start with local insecure registry flag - not needed for minikube use case
 ```minikube start --vm-driver="virtualbox" --host-only-cidr "192.168.59.3/24" --insecure-registry=localhost:5000```  
 
-```minikube delete``` to make sure the ```--insecure-registry``` flag is honoured (https://github.com/kubernetes/minikube/issues/604#issuecomment-247813764)
+```minikube delete``` to make sure the ```--insecure-registry``` flag is honoured [minikube#604#issuecomment-247813764](https://github.com/kubernetes/minikube/issues/604#issuecomment-247813764)
 
 check the cluster status    
 ```kubectl get cs```  
@@ -224,7 +237,24 @@ Connected to 192.168.99.100 (192.168.99.100) port 8181 (#0)
     This applies for the complete local docker setup. Thats why the service is not available via
     localhost, but via the IP mentioned in eval output.
 
-- ```minikube delete``` to delete the whole k8s/minikube setup from your local machine
+- ```minikube delete``` deletes the whole k8s/minikube setup from your local machine
 
 ### blog post
 http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
+
+#### gcloud / kubernetes
+
+- follow steps to [http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster](http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster)
+- "$PROJECT_ID=akkahttp-playground"
+- ```
+  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DdockerImageVersion=v1   -DversionInDocker=0.0.1  docker:publishLocal
+  ```
+- ```
+  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DdockerImageVersion=v1   -DversionInDocker=0.0.1  docker:publishLocal \
+    && docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground:v1
+  ```
+- ```
+  docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground:v1
+  ```
+- ```gcloud docker -- push gcr.io/akkahttp-playground:v1```
+- ``` ... ```
