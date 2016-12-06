@@ -245,16 +245,33 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 #### gcloud / kubernetes
 
 - follow steps to [http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster](http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster)
-- "$PROJECT_ID=akkahttp-playground"
-- ```
-  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DdockerImageVersion=v1   -DversionInDocker=0.0.1  docker:publishLocal
+  - gcloud brings its own kubernetes, make sure an existing kubernetes does not cause conflicts
+- export PROJECT_ID="akkahttp-playground-gproj"
+- prepare all files for docker image 
   ```
-- ```
-  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DdockerImageVersion=v1   -DversionInDocker=0.0.1  docker:publishLocal \
-    && docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground:v1
+  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DdockerImageVersion=v1   -DversionInDocker=0.0.1  docker:stage
   ```
-- ```
-  docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground:v1
+- change the path to opt directory in order to build that docker file using docker build 
   ```
-- ```gcloud docker -- push gcr.io/akkahttp-playground:v1```
+  sed -i -e 's\ADD opt /opt\ADD ./stage/opt /opt\g' ./target/docker/Dockerfile
+  ```
+- change to directory that contains the Dockerfile
+  ```
+  cd target/docker/
+  ```
+- build the actual docker file with the 
+  ```
+  docker build -t "gcr.io/$PROJECT_ID/akkahttp-playground:v1" . 
+  docker build -t "gcr.io/akkahttp-playground-gproj/akkahttp-playground:v1" . 
+  ```
+- run the docker image
+  ```
+  docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/$PROJECT_ID/akkahttp-playground:v1
+  docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground-gproj/akkahttp-playground:v1
+  ```
+  - ```curl -v http://localhost:8181/hello``` to test the service
+- ```
+   gcloud docker -- push gcr.io/$PROJECT_ID/akkahttp-playground:v1
+   gcloud docker -- push gcr.io/akkahttp-playground-gproj/akkahttp-playground:v1
+   ```
 - ``` ... ```
