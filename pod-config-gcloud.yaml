@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
     - name: "akkahttpplayground-container"
-      image: "gcr.io/akkahttp-playground:v1"
-      imagePullPolicy: "Never"
+      image: "gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v1"
+      imagePullPolicy: "Always"
       ports:
         - containerPort: 8181

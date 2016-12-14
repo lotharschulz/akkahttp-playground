@@ -246,7 +246,8 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 
 - follow steps to [http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster](http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster)
   - gcloud brings its own kubernetes, make sure an existing kubernetes does not cause conflicts
-- export PROJECT_ID="akkahttp-playground-gproj"
+- ```export PROJECT_ID="akkahttp-playground-gcproj"```
+- ```export CLUSTER_ID="akkahttp-playground-cluster"```
 - build gcr image 
   ```
   sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DdockerImageVersion=v1   -DversionInDocker=v1 -DdockerPackageName=$PROJECT_ID/akkahttp-playground docker:publishLocal
@@ -254,12 +255,50 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - run the docker image
   ```
   docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/$PROJECT_ID/akkahttp-playground:v1
-  #docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground-gproj/akkahttp-playground:v1
+  #docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v1
   ```
   - ```curl -v http://localhost:8181/hello``` to test the service
 -  upload to docker registry
-   ```
-   gcloud docker -- push gcr.io/$PROJECT_ID/akkahttp-playground:v1
-   #gcloud docker -- push gcr.io/akkahttp-playground-gproj/akkahttp-playground:v1
-   ```
-- ``` ... ```
+  ```
+  gcloud docker -- push gcr.io/$PROJECT_ID/akkahttp-playground:v1
+  #gcloud docker -- push gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v1
+  ```
+- create cluster
+  ```
+  gcloud container clusters create $CLUSTER_ID
+  #gcloud container clusters create akkahttp-playground-cluster
+  ```
+- list the available clusters (delete cluster)
+  ```
+  gcloud container clusters list
+  # gcloud container clusters delete CLUSTER_ID
+  ```
+- get cluster credentials for pod creation
+  ```
+  gcloud container clusters get-credentials $CLUSTER_ID
+  #gcloud container clusters get-credentials akkahttp-playground-cluster
+  ```
+- create pods
+  ```
+  kubectl create -f pod-config-gcloud.yaml
+  ```
+  
+- get information about the pod(s)akkahttpplayground-pod (delete pod)
+  ```
+  kubectl get pods
+  kubectl describe -f pod-config-gcloud.yaml
+  # kubectl delete -f pod-config-gcloud.yaml
+  ```  
+
+- kubectl logs:
+  ```
+  kubectl logs -f pod-config-gcloud.yaml
+  ```
+
+- kubectl deployment
+  ```
+  kubectl create -f deployment-config-cloud.yaml --record
+  # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v1 --port=8181  
+  ```
+
+- kubectl service
