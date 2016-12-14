@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: akkahttpplayground-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: akkahttpplayground
+    spec:
+      containers:
+      - name: "akkahttpplayground-container"
+        image: "gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v1"
+        ports:
+        - containerPort: 8181
