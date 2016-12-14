@@ -158,7 +158,7 @@ get me secrets:
 delete a secret:  
 ```kubectl delete secret myregistrykey```
 
-## steps to deploy to minikube
+#### steps to deploy to minikube
 - ```minikube start```
 - ```minikube docker-env``` keep that output on clipboard for later use, I got
 ```
@@ -239,7 +239,7 @@ Connected to 192.168.99.100 (192.168.99.100) port 8181 (#0)
 
 - ```minikube delete``` deletes the whole k8s/minikube setup from your local machine
 
-### blog post
+##### blog post
 http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 
 #### gcloud / kubernetes
