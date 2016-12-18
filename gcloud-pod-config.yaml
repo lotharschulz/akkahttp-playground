@@ -8,5 +8,14 @@ spec:
     - name: "akkahttpplayground-container"
       image: "gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v1"
       imagePullPolicy: "Always"
+      resources:
+        requests:
+          memory: "512Mi"
+          cpu: "500m"
+        limits:
+          memory: "1024Mi"
+          cpu: "1000m"
       ports:
         - containerPort: 8181
+
+

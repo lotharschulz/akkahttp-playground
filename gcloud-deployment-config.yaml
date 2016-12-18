@@ -1,13 +1,13 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: akkahttpplayground-deployment
+  name: "akkahttpplayground-deployment"
 spec:
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
-        app: akkahttpplayground
+        app: "akkahttpplayground-app"
     spec:
       containers:
       - name: "akkahttpplayground-container"

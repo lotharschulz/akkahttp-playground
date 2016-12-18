@@ -242,7 +242,7 @@ Connected to 192.168.99.100 (192.168.99.100) port 8181 (#0)
 ##### blog post
 http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 
-#### gcloud / kubernetes
+#### gcloud / kubernetes - work in progress
 
 - follow steps to [http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster](http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster)
   - gcloud brings its own kubernetes, make sure an existing kubernetes does not cause conflicts
@@ -280,25 +280,65 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   ```
 - create pods
   ```
-  kubectl create -f pod-config-gcloud.yaml
+  kubectl create -f gcloud-pod-config.yaml
   ```
   
 - get information about the pod(s)akkahttpplayground-pod (delete pod)
   ```
-  kubectl get pods
-  kubectl describe -f pod-config-gcloud.yaml
-  # kubectl delete -f pod-config-gcloud.yaml
+  kubectl get pods --show-labels
+  kubectl describe -f gcloud-pod-config.yaml
+  # kubectl delete -f gcloud-pod-config.yaml
   ```  
 
-- kubectl logs:
+- kubectl logs & events:
   ```
-  kubectl logs -f pod-config-gcloud.yaml
+  kubectl logs akkahttpplayground-pod
+  kubectl get events
   ```
 
-- kubectl deployment
+- create kubectl deployment
   ```
-  kubectl create -f deployment-config-cloud.yaml --record
+  kubectl create -f gcloud-deployment-config.yaml --record
   # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v1 --port=8181  
+  ```
+  
+- kubectl get/describe/scale deployments & replica sets
+  ```
+  kubectl get deployments
+  kubectl describe deployment
+  kubectl get rs
+  kubectl rollout status deployment/akkahttpplayground-deployment
+  kubectl rollout history deployment/akkahttpplayground-deployment
+  kubectl scale deployment akkahttpplayground-deployment --replicas 4
+  kubectl autoscale deployment akkahttpplayground-deployment --min=1 --max=3 --cpu-percent=80
   ```
 
 - kubectl service
+  ```
+  #kubectl expose deployment akkahttpplayground-deployment --type="LoadBalancer" --port=8181 --target-port=8888
+  #kubectl expose deployment akkahttpplayground-deployment --type="LoadBalancer"
+  #kubectl expose deployment akkahttpplayground-deployment --type="LoadBalancer" --port=8181
+  kubectl expose deployment akkahttpplayground-deployment --type="LoadBalancer" --port=8181 --target-port=8181
+ 
+  ```
+  
+- kubectl service
+  ```
+  kubectl get services akkahttpplayground-deployment
+  kubectl get svc akkahttpplayground-deployment
+  kubectl get svc akkahttpplayground-deployment -o json
+  kubectl describe services akkahttpplayground-deployment
+  kubectl describe svc akkahttpplayground-deployment
+  kubectl delete service akkahttpplayground-deployment
+    
+  kubectl create -f gcloud-service-config.yaml
+  kubectl get services akkahttpplayground-pod-service
+  kubectl get svc akkahttpplayground-pod-service
+  kubectl get svc akkahttpplayground-pod-service -o json
+  kubectl delete service akkahttpplayground-pod-service
+  ```
+
+- check out the service
+  ```
+  #curl -v http://104.199.97.204:30430/hello
+  ```
