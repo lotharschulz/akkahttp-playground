@@ -20,7 +20,7 @@ libraryDependencies ++= {
 sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 -DdockerPackageName=akkahttp-playground [sbt command]
 sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 -DdockerPackageName=akkahttp-playground [sbt command]
 sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 -DdockerPackageName=akkahttp-playground [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v1     -DversionInDocker=0.0.1 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v0.0.2 -DversionInDocker=0.0.2 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
 ```
 
 */
@@ -43,7 +43,15 @@ lazy val root = (project in file(".")).
     version       := dockerImageVersion,
     scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-Xlint", "-Ywarn-adapted-args", "-Xfatal-warnings", "-feature"),
     javacOptions  := Seq("-Xlint:unchecked", "-Xlint:deprecation", "-source", "1.8", "-target", "1.8"),
-    //javaOptions   := Seq("-Xmx2G"),
+    // http://www.scala-sbt.org/sbt-native-packager/archetypes/java_app/customize.html#via-build-sbt
+    javaOptions in Universal ++= Seq(
+      // -J params will be added as jvm parameters
+      "-J-Xms64m",
+      "-J-Xmx490m",
+
+      // you can access any build setting/task here
+      s"-version=${version.value}"
+    ),
 
     maintainer in Docker     := "Lothar Schulz <mail@lothar-schulz.info>",
     packageSummary in Docker := "akka http example",
