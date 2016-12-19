@@ -4,6 +4,7 @@ RUN mkdir -p /akkahttp-playground
 WORKDIR /akkahttp-playground
 
 COPY uberjar.jar uberjar.jar
+COPY run.sh run.sh
 RUN ["chown", "-R", "daemon:daemon", "."]
 EXPOSE 8181
 USER daemon
