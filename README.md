@@ -271,7 +271,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - list the available clusters (delete cluster)
   ```
   gcloud container clusters list
-  # gcloud container clusters delete CLUSTER_ID
+  # gcloud container clusters delete $CLUSTER_ID
   ```
 - get cluster credentials for pod creation
   ```
@@ -287,19 +287,22 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   ```
   kubectl get pods --show-labels
   kubectl describe -f gcloud-pod-config.yaml
+  kubectl describe pod [akkahttpplayground-deployment-502456604-6b01s]
   # kubectl delete -f gcloud-pod-config.yaml
-  ```  
+  ```
 
 - kubectl logs & events:
   ```
   kubectl logs akkahttpplayground-pod
+  kubectl logs [akkahttpplayground-deployment-502456604-6b01s]
   kubectl get events
   ```
 
 - create kubectl deployment
   ```
   kubectl create -f gcloud-deployment-config.yaml --record
-  # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2 --port=8181  
+  # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2 --port=8181
+  # kubectl delete deployment akkahttpplayground-deployment
   ```
   
 - kubectl get/describe/scale deployments & replica sets
@@ -342,7 +345,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   ```
   #curl -v http://104.199.97.204:30430/hello
   ```
-#### uberjar 4 pierone docker images
+#### uberjar - docker images
 - create & run uber jar
   ```
   sbt -DuberjarName=uberjar.jar assembly
@@ -354,5 +357,13 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   cp target/scala-2.11/uberjar.jar docker/akkahttp-playground/uberjar.jar && \ 
   docker build --rm -t pierone.stups.zalan.do/automata/akkahttp-playground:0.0.4 docker/akkahttp-playground && \
   docker push pierone.stups.zalan.do/automata/akkahttp-playground:0.0.4 && \
+  rm docker/akkahttp-playground/uberjar.jar
+  ```
+
+- create docker image w/ uberjar 4 gcloud
+  ```
+  cp target/scala-2.11/uberjar.jar docker/akkahttp-playground/uberjar.jar && \ 
+  docker build --rm -t gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2.1 docker/akkahttp-playground && \
+  gcloud docker push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2.1 && \
   rm docker/akkahttp-playground/uberjar.jar
   ```
