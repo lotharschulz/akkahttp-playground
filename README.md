@@ -19,9 +19,9 @@ others
 # docker hub registry
 sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
 # pierone docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.2 [sbt command]
 # google gcr docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v1     -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v0.0.2 -DversionInDocker=0.0.2 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
 ```
 
 
@@ -250,18 +250,18 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - ```export CLUSTER_ID="akkahttp-playground-cluster"```
 - build gcr image 
   ```
-  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DdockerImageVersion=v1   -DversionInDocker=v1 -DdockerPackageName=$PROJECT_ID/akkahttp-playground docker:publishLocal
+  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DdockerImageVersion=v0.0.2   -DversionInDocker=v0.0.2 -DdockerPackageName=$PROJECT_ID/akkahttp-playground docker:publishLocal
   ```
 - run the docker image
   ```
-  docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/$PROJECT_ID/akkahttp-playground:v1
-  #docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v1
+  docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2
+  #docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.2
   ```
   - ```curl -v http://localhost:8181/hello``` to test the service
 -  upload to docker registry
   ```
-  gcloud docker -- push gcr.io/$PROJECT_ID/akkahttp-playground:v1
-  #gcloud docker -- push gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v1
+  gcloud docker -- push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2
+  #gcloud docker -- push gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.2
   ```
 - create cluster
   ```
@@ -299,7 +299,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - create kubectl deployment
   ```
   kubectl create -f gcloud-deployment-config.yaml --record
-  # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v1 --port=8181  
+  # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2 --port=8181  
   ```
   
 - kubectl get/describe/scale deployments & replica sets
