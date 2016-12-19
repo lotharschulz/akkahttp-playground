@@ -12,16 +12,16 @@ A sample project based on akkahttp, docker and minikube. This allows you to deve
 default
 ```
 # local docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DartefactVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
 ```
 others 
 ```
 # docker hub registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DartefactVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
 # pierone docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.2  -DversionInDocker=0.0.2 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DartefactVersion=0.0.2  -DversionInDocker=0.0.2 [sbt command]
 # google gcr docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v0.0.2 -DversionInDocker=0.0.2 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DartefactVersion=v0.0.2 -DversionInDocker=0.0.2 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
 ```
 
 
@@ -250,7 +250,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - ```export CLUSTER_ID="akkahttp-playground-cluster"```
 - build gcr image 
   ```
-  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DdockerImageVersion=v0.0.2   -DversionInDocker=v0.0.2 -DdockerPackageName=$PROJECT_ID/akkahttp-playground docker:publishLocal
+  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DartefactVersion=v0.0.2   -DversionInDocker=v0.0.2 -DdockerPackageName=$PROJECT_ID/akkahttp-playground docker:publishLocal
   ```
 - run the docker image
   ```
@@ -341,4 +341,17 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - check out the service
   ```
   #curl -v http://104.199.97.204:30430/hello
+  ```
+#### uberjar 4 pierone docker images
+- create & run uber jar
+  ```
+  sbt -DuberjarName=uberjar.jar assembly
+  java -Xms1024m -Xmx2048m -jar target/scala-2.11/uberjar.jar 
+  ```  
+  
+- create docker image w/ uberjar 4 pierone
+  ```
+  cp target/scala-2.11/uberjar.jar docker/akkahttp-playground/uberjar.jar && \ 
+  docker build --rm -t pierone.stups.zalan.do/automata/akkahttp-playground:0.0.4 docker/akkahttp-playground && \
+  docker push pierone.stups.zalan.do/automata/akkahttp-playground:0.0.4
   ```
