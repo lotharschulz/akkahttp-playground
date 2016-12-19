@@ -353,5 +353,6 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   ```
   cp target/scala-2.11/uberjar.jar docker/akkahttp-playground/uberjar.jar && \ 
   docker build --rm -t pierone.stups.zalan.do/automata/akkahttp-playground:0.0.4 docker/akkahttp-playground && \
-  docker push pierone.stups.zalan.do/automata/akkahttp-playground:0.0.4
+  docker push pierone.stups.zalan.do/automata/akkahttp-playground:0.0.4 && \
+  rm docker/akkahttp-playground/uberjar.jar
   ```
