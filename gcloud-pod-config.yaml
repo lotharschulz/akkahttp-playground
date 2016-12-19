@@ -6,14 +6,14 @@ metadata:
 spec:
   containers:
     - name: "akkahttpplayground-container"
-      image: "gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v1"
+      image: "gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.2"
       imagePullPolicy: "Always"
       resources:
         requests:
-          memory: "512Mi"
+          memory: "1024Mi"
           cpu: "500m"
         limits:
-          memory: "1024Mi"
+          memory: "2048Mi"
           cpu: "1000m"
       ports:
         - containerPort: 8181
