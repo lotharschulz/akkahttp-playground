@@ -19,7 +19,7 @@ libraryDependencies ++= {
 /*
 sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 -DdockerPackageName=akkahttp-playground [sbt command]
 sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 -DdockerPackageName=akkahttp-playground [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.1  -DversionInDocker=0.0.1 -DdockerPackageName=akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DdockerImageVersion=0.0.2  -DversionInDocker=0.0.2 -DdockerPackageName=akkahttp-playground [sbt command]
 sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DdockerImageVersion=v0.0.2 -DversionInDocker=0.0.2 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
 ```
 
