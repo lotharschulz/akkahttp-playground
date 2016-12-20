@@ -352,7 +352,15 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - create docker image w/ uberjar 4 pierone
   ```
   cp target/scala-2.11/uberjar.jar docker/akkahttp-playground/uberjar.jar && \ 
-  docker build --rm -t pierone.stups.zalan.do/automata/akkahttp-playground:0.0.4 docker/akkahttp-playground && \
-  docker push pierone.stups.zalan.do/automata/akkahttp-playground:0.0.4 && \
+  docker build --rm -t pierone.stups.zalan.do/automata/akkahttp-playground:0.0.11 docker/akkahttp-playground && \
+  docker push pierone.stups.zalan.do/automata/akkahttp-playground:0.0.11 && \
   rm docker/akkahttp-playground/uberjar.jar
+  ```
+  
+- run docker container locally
+  ```
+  # interactive mode 'i' and container gets deleted after crtl C
+  docker run -it -p 8181:8181 --name akkahttp-playground --rm pierone.stups.zalan.do/automata/akkahttp-playground:0.0.11
+  # deamon 'd'
+  docker run -d -p 8181:8181 --name akkahttp-playground pierone.stups.zalan.do/automata/akkahttp-playground:0.0.11  
   ```
