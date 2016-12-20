@@ -21,7 +21,7 @@ sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -Dd
 # pierone docker registry
 sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DartefactVersion=0.0.2  -DversionInDocker=0.0.2 [sbt command]
 # google gcr docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DartefactVersion=v0.0.2 -DversionInDocker=0.0.2 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DartefactVersion=v0.0.2 -DversionInDocker=v0.0.2 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
 ```
 
 
@@ -271,7 +271,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - list the available clusters (delete cluster)
   ```
   gcloud container clusters list
-  # gcloud container clusters delete CLUSTER_ID
+  # gcloud container clusters delete $CLUSTER_ID
   ```
 - get cluster credentials for pod creation
   ```
@@ -287,19 +287,22 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   ```
   kubectl get pods --show-labels
   kubectl describe -f gcloud-pod-config.yaml
+  kubectl describe pod [akkahttpplayground-deployment-502456604-6b01s]
   # kubectl delete -f gcloud-pod-config.yaml
-  ```  
+  ```
 
 - kubectl logs & events:
   ```
   kubectl logs akkahttpplayground-pod
+  kubectl logs [akkahttpplayground-deployment-502456604-6b01s]
   kubectl get events
   ```
 
 - create kubectl deployment
   ```
   kubectl create -f gcloud-deployment-config.yaml --record
-  # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2 --port=8181  
+  # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2 --port=8181
+  # kubectl delete deployment akkahttpplayground-deployment
   ```
   
 - kubectl get/describe/scale deployments & replica sets
@@ -342,7 +345,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   ```
   #curl -v http://104.199.97.204:30430/hello
   ```
-#### uberjar 4 pierone docker images
+#### uberjar - docker images
 - create & run uber jar
   ```
   sbt -DuberjarName=uberjar.jar assembly
@@ -356,11 +359,19 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   docker push pierone.stups.zalan.do/automata/akkahttp-playground:0.0.11 && \
   rm docker/akkahttp-playground/uberjar.jar
   ```
+
+- create docker image w/ uberjar 4 gcloud
+  ```
+  cp target/scala-2.11/uberjar.jar docker/akkahttp-playground/uberjar.jar && \ 
+  docker build --rm -t gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2.1 docker/akkahttp-playground && \
+  gcloud docker push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2.1 && \
+  rm docker/akkahttp-playground/uberjar.jar
+  ```
   
-- run docker container locally
+- run pierone docker container locally
   ```
   # interactive mode 'i' and container gets deleted after crtl C
   docker run -it -p 8181:8181 --name akkahttp-playground --rm pierone.stups.zalan.do/automata/akkahttp-playground:0.0.11
   # deamon 'd'
   docker run -d -p 8181:8181 --name akkahttp-playground pierone.stups.zalan.do/automata/akkahttp-playground:0.0.11  
-  ```
+
