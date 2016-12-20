@@ -55,9 +55,6 @@ object MyService extends Directives with JsonSupport {
     val bindingFuture = Http().bindAndHandle(logroute, "0.0.0.0", 8181)
 
     println(s"Server online at http://localhost:8181/hello")
-    StdIn.readLine("Hit ENTER to stop...") // let it run until user presses return
-    //bindingFuture.flatMap(b => b.unbind()).onComplete(s => system.terminate())
-    Await.ready(system.terminate(), Duration.Inf)
   }
 
   trait MyService {
