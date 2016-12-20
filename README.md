@@ -254,8 +254,8 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   ```
 - run the docker image
   ```
-  docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2
-  #docker run -dit -p 8181:8181 --name akkahttp-playground gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.2
+  docker run -it -p 8181:8181 --name akkahttp-playground --rm gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2
+  #docker run -it -p 8181:8181 --name akkahttp-playground --rm gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.2
   ```
   - ```curl -v http://localhost:8181/hello``` to test the service
 -  upload to docker registry
@@ -287,14 +287,12 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   ```
   kubectl get pods --show-labels
   kubectl describe -f gcloud-pod-config.yaml
-  kubectl describe pod [akkahttpplayground-deployment-502456604-6b01s]
   # kubectl delete -f gcloud-pod-config.yaml
   ```
 
 - kubectl logs & events:
   ```
   kubectl logs akkahttpplayground-pod
-  kubectl logs [akkahttpplayground-deployment-502456604-6b01s]
   kubectl get events
   ```
 
@@ -335,16 +333,32 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   kubectl delete service akkahttpplayground-deployment
     
   kubectl create -f gcloud-service-config.yaml
-  kubectl get services akkahttpplayground-pod-service
-  kubectl get svc akkahttpplayground-pod-service
-  kubectl get svc akkahttpplayground-pod-service -o json
-  kubectl delete service akkahttpplayground-pod-service
+  kubectl get services akkahttpplayground-service
+  kubectl get svc akkahttpplayground-service
+  kubectl get svc akkahttpplayground-service -o json
+  kubectl delete service akkahttpplayground-service
   ```
 
 - check out the service
   ```
-  #curl -v http://104.199.97.204:30430/hello
+  curl -v http://104.155.14.52:8181/hello
   ```
+  ```$ curl -v http://104.155.14.52:8181/hello
+     *   Trying 104.155.14.52...
+     * Connected to 104.155.14.52 (104.155.14.52) port 8181 (#0)
+     > GET /hello HTTP/1.1
+     > Host: 104.155.14.52:8181
+     > User-Agent: curl/7.47.0
+     > Accept: */*
+     > 
+     < HTTP/1.1 200 OK
+     < Server: akka-http/2.4.10
+     < Date: Tue, 20 Dec 2016 22:26:07 GMT
+     < Content-Type: application/json
+     < Content-Length: 16
+     < 
+     * Connection #0 to host 104.155.14.52 left intact
+     {"msg":"my msg"}```
 #### uberjar - docker images
 - create & run uber jar
   ```
