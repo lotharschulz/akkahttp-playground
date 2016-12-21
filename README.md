@@ -314,32 +314,18 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   kubectl autoscale deployment akkahttpplayground-deployment --min=1 --max=3 --cpu-percent=80
   ```
 
-- kubectl service
+- kubectl service option 1
   ```
-  #kubectl expose deployment akkahttpplayground-deployment --type="LoadBalancer" --port=8181 --target-port=8888
-  #kubectl expose deployment akkahttpplayground-deployment --type="LoadBalancer"
-  #kubectl expose deployment akkahttpplayground-deployment --type="LoadBalancer" --port=8181
   kubectl expose deployment akkahttpplayground-deployment --type="LoadBalancer" --port=8181 --target-port=8181
- 
-  ```
-  
-- kubectl service
-  ```
   kubectl get services akkahttpplayground-deployment
   kubectl get svc akkahttpplayground-deployment
   kubectl get svc akkahttpplayground-deployment -o json
   kubectl describe services akkahttpplayground-deployment
   kubectl describe svc akkahttpplayground-deployment
   kubectl delete service akkahttpplayground-deployment
-    
-  kubectl create -f gcloud-service-config.yaml
-  kubectl get services akkahttpplayground-service
-  kubectl get svc akkahttpplayground-service
-  kubectl get svc akkahttpplayground-service -o json
-  kubectl delete service akkahttpplayground-service
+ 
   ```
-
-- check out the service
+  - check out the service
   ```
   curl -v http://104.155.14.52:8181/hello
   ```
@@ -359,6 +345,24 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
      < 
      * Connection #0 to host 104.155.14.52 left intact
      {"msg":"my msg"}```
+
+  
+- kubectl service option 2
+  ```
+  kubectl create -f gcloud-service-config.yaml
+  kubectl get services akkahttpplayground-service
+  kubectl get svc akkahttpplayground-service
+  kubectl get svc akkahttpplayground-service -o json
+  kubectl delete service akkahttpplayground-service
+  ```
+
+- ingress
+  ```
+  kubectl create -f gcloud-ingress-config.yaml
+  kubectl get ing
+  ```
+
+
 #### uberjar - docker images
 - create & run uber jar
   ```

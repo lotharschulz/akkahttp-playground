@@ -5,4 +5,5 @@ metadata:
 spec:
   backend:
     serviceName: "akkahttpplayground-service"
-    servicePort: 8181
+    #servicePort: 8181
+    servicePort: 80

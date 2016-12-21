@@ -9,3 +9,5 @@ spec:
   - port: 8181
     targetPort: 8181
     protocol: TCP
+    nodePort: 30000
+  type: NodePort
