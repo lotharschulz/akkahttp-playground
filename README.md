@@ -120,6 +120,12 @@ docker push localhost:5000/scala:0.0.2
 
 ### kubernetes
 
+#### get me things
+```
+kubectl get --help
+kubectl get deploy,ev,ing,jobs,petsets,po,pv,rs,svc
+```
+
 #### minikube
 Minikube is a tool that makes it easy to run Kubernetes locally.
 
