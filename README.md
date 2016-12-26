@@ -12,16 +12,16 @@ A sample project based on akkahttp, docker and minikube. This allows you to deve
 default
 ```
 # local docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DartefactVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DartefactVersion=0.0.3  -DversionInDocker=0.0.3 [sbt command]
 ```
 others 
 ```
 # docker hub registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DartefactVersion=0.0.1  -DversionInDocker=0.0.1 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DartefactVersion=0.0.3  -DversionInDocker=0.0.3 [sbt command]
 # pierone docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DartefactVersion=0.0.2  -DversionInDocker=0.0.2 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DartefactVersion=0.0.3  -DversionInDocker=0.0.3 [sbt command]
 # google gcr docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DartefactVersion=v0.0.2 -DversionInDocker=v0.0.2 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DartefactVersion=v0.0.3 -DversionInDocker=v0.0.3 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
 ```
 
 
@@ -53,8 +53,8 @@ sbt docker:publishLocal
 
 #### docker run local image
 ```
-docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.1
-sbt docker:publishLocal && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.1
+docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.3
+sbt docker:publishLocal && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.3
 ```
 
 ##### test the running service
@@ -74,10 +74,10 @@ remove all containers:
 
 #### push to local registry
 ```
-docker push localhost:5000/akkahttp-playground:0.0.1
+docker push localhost:5000/akkahttp-playground:0.0.3
 ```
 combined docker create image, push to registry & run
-```sbt docker:publishLocal && sbt docker:publish && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.1 ```
+```sbt docker:publishLocal && sbt docker:publish && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.3```
 
 #### docker stop local image
 ```
@@ -180,7 +180,7 @@ export DOCKER_API_VERSION="1.23
 - ```cd ../scala/```
 - ```docker build -t localhost:5000/scala:0.0.2 -f Dockerfile . && docker push localhost:5000/scala:0.0.2```
 - ```cd ../../..```
-- ```sbt docker:publishLocal && sbt docker:publish && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.1```
+- ```sbt docker:publishLocal && sbt docker:publish && docker run -dit -p 8181:8181 --name akkahttp-playground localhost:5000/akkahttp-playground:0.0.3```
 - ```kubectl get secrets```
 - ```docker login localhost:5000``` should bring up something like:
 ```
@@ -204,10 +204,10 @@ IP:		172.17.0.5
 Containers:
   akkahttpplayground:
     Container ID:		docker://e638961e5dd9db76e30643523b20330afeac752ff76f9468f5cec6dfbd725275
-    Image:			localhost:5000/akkahttp-playground:0.0.1
+    Image:			localhost:5000/akkahttp-playground:0.0.3
 ...
-26s	3s	3	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Pulling	pulling image "localhost:5000/akkahttp-playground:0.0.1"
-25s	3s	3	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Pulled	Successfully pulled image "localhost:5000/akkahttp-playground:0.0.1"
+26s	3s	3	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Pulling	pulling image "localhost:5000/akkahttp-playground:0.0.3"
+25s	3s	3	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Pulled	Successfully pulled image "localhost:5000/akkahttp-playground:0.0.3"
 3s	3s	1	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Created	Created container with docker id 5ac511bf78d3; Security:[seccomp=unconfined]
 3s	3s	1	{kubelet minikube}	spec.containers{akkahttpplayground}	Normal	Started	Started container with docker id 5ac511bf78d3
 ```
@@ -256,18 +256,18 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - ```export CLUSTER_ID="akkahttp-playground-cluster"```
 - build gcr image 
   ```
-  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DartefactVersion=v0.0.2   -DversionInDocker=v0.0.2 -DdockerPackageName=$PROJECT_ID/akkahttp-playground docker:publishLocal
+  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DartefactVersion=v0.0.3   -DversionInDocker=v0.0.3 -DdockerPackageName=$PROJECT_ID/akkahttp-playground docker:publishLocal
   ```
 - run the docker image
   ```
-  docker run -it -p 8181:8181 --name akkahttp-playground --rm gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2
-  #docker run -it -p 8181:8181 --name akkahttp-playground --rm gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.2
+  docker run -it -p 8181:8181 --name akkahttp-playground --rm gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.3
+  #docker run -it -p 8181:8181 --name akkahttp-playground --rm gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.3
   ```
   - ```curl -v http://localhost:8181/hello``` to test the service
 -  upload to docker registry
   ```
-  gcloud docker -- push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2
-  #gcloud docker -- push gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.2
+  gcloud docker -- push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.3
+  #gcloud docker -- push gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.3
   ```
 - create cluster
   ```
@@ -305,7 +305,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - create kubectl deployment
   ```
   kubectl create -f gcloud-deployment-config.yaml --record
-  # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2 --port=8181
+  # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.3 --port=8181
   # kubectl delete deployment akkahttpplayground-deployment
   ```
   
@@ -335,6 +335,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   ```
   curl -v http://104.155.14.52:8181/hello
   ```
+  sample output
   ```$ curl -v http://104.155.14.52:8181/hello
      *   Trying 104.155.14.52...
      * Connected to 104.155.14.52 (104.155.14.52) port 8181 (#0)
@@ -361,11 +362,20 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   kubectl get svc akkahttpplayground-service -o json
   kubectl delete service akkahttpplayground-service
   ```
-
-- ingress
+  
+  - ingress
   ```
   kubectl create -f gcloud-ingress-config.yaml
-  kubectl get ing
+  kubectl get ing akkahttpplayground-ingress --watch
+  kubectl describe ing akkahttpplayground-ingress
+  ```
+  sample output
+  ```
+  NAME                         HOSTS     ADDRESS   PORTS     AGE
+  akkahttpplayground-ingress   *                   80        6s
+  NAME                         HOSTS     ADDRESS          PORTS     AGE
+  akkahttpplayground-ingress   *         130.211.19.252   80        31s
+  akkahttpplayground-ingress   *         130.211.19.252   80        31s
   ```
 
 
@@ -387,8 +397,8 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - create docker image w/ uberjar 4 gcloud
   ```
   cp target/scala-2.11/uberjar.jar docker/akkahttp-playground/uberjar.jar && \ 
-  docker build --rm -t gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2.1 docker/akkahttp-playground && \
-  gcloud docker push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.2.1 && \
+  docker build --rm -t gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.3.1 docker/akkahttp-playground && \
+  gcloud docker push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.3.1 && \
   rm docker/akkahttp-playground/uberjar.jar
   ```
   
