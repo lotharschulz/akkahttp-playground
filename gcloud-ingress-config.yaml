@@ -1,9 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "akkahttpplayground-ingress"
+spec:
+  backend:
+    serviceName: "akkahttpplayground-service"
+    servicePort: 8181
 #apiVersion: extensions/v1beta1
 #kind: Ingress
 #metadata:
 #  name: "akkahttpplayground-ingress"
-#  annotations:
-#      kubernetes.io/ingress.class: "ing"
 #spec:
 #  rules:
 #  - http:
@@ -13,25 +19,3 @@
 #          serviceName: "akkahttpplayground-service"
 #          servicePort: 8181
 #          #servicePort: 80    #
-
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: "akkahttpplayground-ingress"
-#  label:
-#    run: "akkahttpplayground-service"
-spec:
-#  selector:
-#    run: "akkahttpplayground-service"
-  backend:
-    serviceName: "akkahttpplayground-service"
-    servicePort: 8181
-
-#apiVersion: extensions/v1beta1
-#kind: Ingress
-#metadata:
-#  name: "akkahttpplayground-ingress"
-#spec:
-#  backend:
-#    serviceName: "akkahttpplayground-service"
-#    servicePort: 8181
