@@ -11,10 +11,25 @@ import scala.concurrent.duration.Duration
 
 class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with ScalatestRouteTest with MyService{
 
+  "MyServiceSpec GET on /" should "return a welcome message" in {
+    Get("/") ~> Route.seal(route) ~> check {
+      status shouldBe StatusCodes.OK
+      assert(contentType === ContentTypes.`application/json`)
+      entityAs[String] shouldBe "{\"status\":\"is up\"}"
+    }
+  }
+
+  "MyServiceSpec PUT on /" should "return a MethodNotAllowed" in {
+    Put("/") ~> Route.seal(route) ~> check {
+      assert(status === StatusCodes.MethodNotAllowed)
+    }
+  }
+
   "MyServiceSpec GET on /hello" should "return my msg" in {
     Get("/hello") ~> Route.seal(route) ~> check {
-      status === StatusCodes.OK
-      contentType === ContentTypes.`application/json`
+      status shouldBe StatusCodes.OK
+      assert(contentType === ContentTypes.`application/json`)
+      //assert(entityAs[String] === "{\"msg\":\"my msg\"}")
       entityAs[String] shouldEqual "{\"msg\":\"my msg\"}"
     }
   }
@@ -25,24 +40,9 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
       uri = "/hello",
       entity = HttpEntity(MediaTypes.`application/json`, """{"msg":"bla"}""")) 
     httpRequest ~> Route.seal(route) ~> check{
-      status === StatusCodes.Created
-      contentType === ContentTypes.`application/json`
-      entityAs[String] shouldEqual "hello msg: bla"
-      //entityAs[String] shouldEqual "hello msg: \"bla\""
-    }
-  }
-
-  "MyServiceSpec PUT on /" should "return a MethodNotAllowed" in {
-    Put() ~> Route.seal(route) ~> check {
-      status === StatusCodes.MethodNotAllowed
-    }
-  }
-
-  "MyServiceSpec GET on /" should "return a welcome message" in {
-    Get() ~> Route.seal(route) ~> check {
-      status === StatusCodes.OK
-      contentType === ContentTypes.`application/json`
-      entityAs[String] equals "{\"welcome\":\"message\"}"
+      status shouldBe StatusCodes.Created
+      assert(contentType === ContentTypes.`application/json`)
+      entityAs[String] shouldEqual "{\"msg\":\"bla\"}"
     }
   }
 
