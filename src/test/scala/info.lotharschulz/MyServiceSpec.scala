@@ -11,7 +11,7 @@ import scala.concurrent.duration.Duration
 
 class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with ScalatestRouteTest with MyService{
 
-  "MyServiceSpec get" should "return my msg" in {
+  "MyServiceSpec GET on /hello" should "return my msg" in {
     Get("/hello") ~> Route.seal(route) ~> check {
       status === StatusCodes.OK
       contentType === ContentTypes.`application/json`
@@ -19,7 +19,7 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
     }
   }
 
-  "MyServiceSpec post" should "should return a hello msg" in {
+  "MyServiceSpec POST on /hello withdefined msg" should "should return the posted msg" in {
     val httpRequest = HttpRequest(
       method = HttpMethods.POST, 
       uri = "/hello",
@@ -32,12 +32,20 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
     }
   }
 
-  "MyServiceSpec put" should "return a MethodNotAllowed" in {
+  "MyServiceSpec PUT on /" should "return a MethodNotAllowed" in {
     Put() ~> Route.seal(route) ~> check {
       status === StatusCodes.MethodNotAllowed
     }
   }
-  
+
+  "MyServiceSpec GET on /" should "return a welcome message" in {
+    Get() ~> Route.seal(route) ~> check {
+      status === StatusCodes.OK
+      contentType === ContentTypes.`application/json`
+      entityAs[String] equals "{\"welcome\":\"message\"}"
+    }
+  }
+
   override protected def afterAll():Unit = {
     Await.ready(system.terminate(), Duration.Inf)
     super.afterAll()
