@@ -58,7 +58,8 @@ sbt docker:publishLocal && docker run -dit -p 8181:8181 --name akkahttp-playgrou
 ```
 
 ##### test the running service
-```curl http://localhost:8181/hello``` should return something like ```{"msg":"my msg"}```  
+- ```curl -v http://localhost:8181/``` should return something like ```{"status":"is up"}```  
+- ```curl -v http://localhost:8181/hello``` should return something like ```{"msg":"my msg"}```  
 
 ###### check some logs
 ```docker logs -f akkahttp-playground``` will follows the docker container logs.
@@ -263,7 +264,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   docker run -it -p 8181:8181 --name akkahttp-playground --rm gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.3
   #docker run -it -p 8181:8181 --name akkahttp-playground --rm gcr.io/akkahttp-playground-gcproj/akkahttp-playground:v0.0.3
   ```
-  - ```curl -v http://localhost:8181/hello``` to test the service
+  - test the service: ```curl -v http://localhost:8181/``` or ```curl -v http://localhost:8181/hello```
 -  upload to docker registry
   ```
   gcloud docker -- push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.3
