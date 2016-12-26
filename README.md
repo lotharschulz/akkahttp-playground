@@ -332,27 +332,12 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   kubectl delete service akkahttpplayground-deployment
  
   ```
-  - check out the service
+  - test the service
   ```
-  curl -v http://104.155.14.52:8181/hello
+  curl http://104.155.14.52:8181/hello
   ```
   sample output
-  ```$ curl -v http://104.155.14.52:8181/hello
-     *   Trying 104.155.14.52...
-     * Connected to 104.155.14.52 (104.155.14.52) port 8181 (#0)
-     > GET /hello HTTP/1.1
-     > Host: 104.155.14.52:8181
-     > User-Agent: curl/7.47.0
-     > Accept: */*
-     > 
-     < HTTP/1.1 200 OK
-     < Server: akka-http/2.4.10
-     < Date: Tue, 20 Dec 2016 22:26:07 GMT
-     < Content-Type: application/json
-     < Content-Length: 16
-     < 
-     * Connection #0 to host 104.155.14.52 left intact
-     {"msg":"my msg"}```
+  ```{"msg":"my msg"}```
 
   
 - kubectl service option 2
@@ -373,10 +358,21 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   sample output
   ```
   NAME                         HOSTS     ADDRESS   PORTS     AGE
-  akkahttpplayground-ingress   *                   80        6s
-  NAME                         HOSTS     ADDRESS          PORTS     AGE
-  akkahttpplayground-ingress   *         130.211.19.252   80        31s
-  akkahttpplayground-ingress   *         130.211.19.252   80        31s
+  akkahttpplayground-ingress   *                   80        11s
+  akkahttpplayground-ingress   *         130.211.36.41   80        44s
+  akkahttpplayground-ingress   *         130.211.36.41   80        44s
+  akkahttpplayground-ingress   *         130.211.36.41   80        1m
+  ```
+
+  - test the service
+  ```
+  curl http://130.211.36.41/
+  curl http://130.211.36.41/hello
+  ```
+  sample outputs
+  ```
+  {"status":"is up"}
+  {"msg":"my msg"}
   ```
 
 
