@@ -12,16 +12,16 @@ A sample project based on akkahttp, docker and minikube. This allows you to deve
 default
 ```
 # local docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DartefactVersion=0.0.3  -DversionInDocker=0.0.3 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.3  -DdockerRepo=localhost:5000                  -DartefactVersion=0.0.3  -DversionInDocker=0.0.3 [sbt command]
 ```
 others 
 ```
 # docker hub registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DartefactVersion=0.0.3  -DversionInDocker=0.0.3 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.3    -DdockerRepo=lotharschulz                    -DartefactVersion=0.0.3  -DversionInDocker=0.0.3 [sbt command]
 # pierone docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DartefactVersion=0.0.3  -DversionInDocker=0.0.3 [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.3    -DdockerRepo=pierone.stups.zalan.do/automata -DartefactVersion=0.0.3  -DversionInDocker=0.0.3 [sbt command]
 # google gcr docker registry
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DartefactVersion=v0.0.3 -DversionInDocker=v0.0.3 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.3    -DdockerRepo=gcr.io                          -DartefactVersion=v0.0.3 -DversionInDocker=v0.0.3 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
 ```
 
 
@@ -58,8 +58,8 @@ sbt docker:publishLocal && docker run -dit -p 8181:8181 --name akkahttp-playgrou
 ```
 
 ##### test the running service
-- ```curl -v http://localhost:8181/``` should return something like ```{"status":"is up"}```  
-- ```curl -v http://localhost:8181/hello``` should return something like ```{"msg":"my msg"}```  
+- ```curl http://localhost:8181/``` should return something like ```{"status":"is up"}```  
+- ```curl http://localhost:8181/hello``` should return something like ```{"msg":"my msg"}```  
 
 ###### check some logs
 ```docker logs -f akkahttp-playground``` will follows the docker container logs.
@@ -94,29 +94,33 @@ docker rm akkahttp-playground
 create:
 ```
 cd base/docker/java
-docker build -t localhost:5000/java08:[tag] -f Dockerfile .
-docker build -t localhost:5000/java08:0.0.2 -f Dockerfile .
+docker build -t [docker registry[:port]]/java08:[tag] -f Dockerfile .
+docker build -t localhost:5000/java08:0.0.3 -f Dockerfile .
+docker build -t lotharschulz/java08:0.0.3 -f Dockerfile .
 
 ```
 
 push:
 ```
-docker push localhost:5000/java08:[tag]
-docker push localhost:5000/java08:0.0.2
+docker push [docker registry[:port]]/java08:[tag]
+docker push localhost:5000/java08:0.0.3
+docker push lotharschulz/java08:0.0.3
 ```
 
 ##### create & push docker base image scala
 create:
 ```
 cd base/docker/scala
-docker build -t localhost:5000/scala:[tag] -f Dockerfile .
-docker build -t localhost:5000/scala:0.0.2 -f Dockerfile .
+docker build -t [docker registry[:port]]/scala:[tag] -f Dockerfile .
+docker build -t localhost:5000/scala:0.0.3 -f Dockerfile .
+docker build -t lotharschulz/scala:0.0.3 -f Dockerfile .
 ```
 
 push:
 ```
-docker push localhost:5000/scala:[tag]
-docker push localhost:5000/scala:0.0.2
+docker push [docker registry[:port]]/scala:[tag]
+docker push localhost:5000/scala:0.0.3
+docker push lotharschulz/scala:0.0.3
 ```
 
 ### kubernetes
@@ -257,7 +261,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 - ```export CLUSTER_ID="akkahttp-playground-cluster"```
 - build gcr image 
   ```
-  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io   -DartefactVersion=v0.0.3   -DversionInDocker=v0.0.3 -DdockerPackageName=$PROJECT_ID/akkahttp-playground docker:publishLocal
+  sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.3    -DdockerRepo=gcr.io   -DartefactVersion=v0.0.3   -DversionInDocker=v0.0.3 -DdockerPackageName=$PROJECT_ID/akkahttp-playground docker:publishLocal
   ```
 - run the docker image
   ```

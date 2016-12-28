@@ -17,10 +17,10 @@ libraryDependencies ++= {
 }
 
 /*
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.2  -DdockerRepo=localhost:5000                  -DartefactVersion=0.0.3  -DversionInDocker=0.0.3  -DdockerPackageName=akkahttp-playground [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=lotharschulz                    -DartefactVersion=0.0.3  -DversionInDocker=0.0.3  -DdockerPackageName=akkahttp-playground [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=pierone.stups.zalan.do/automata -DartefactVersion=0.0.3  -DversionInDocker=0.0.3  -DdockerPackageName=akkahttp-playground [sbt command]
-sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.2    -DdockerRepo=gcr.io                          -DartefactVersion=v0.0.3 -DversionInDocker=v0.0.3 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=localhost:5000/scala:0.0.3  -DdockerRepo=localhost:5000                  -DartefactVersion=0.0.3  -DversionInDocker=0.0.3  -DdockerPackageName=akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.3    -DdockerRepo=lotharschulz                    -DartefactVersion=0.0.3  -DversionInDocker=0.0.3  -DdockerPackageName=akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.3    -DdockerRepo=pierone.stups.zalan.do/automata -DartefactVersion=0.0.3  -DversionInDocker=0.0.3  -DdockerPackageName=akkahttp-playground [sbt command]
+sbt -DdockerOrganization=info.lotharschulz  -DdockerName=akkahttp-playground -DdockerBImage=lotharschulz/scala:0.0.3    -DdockerRepo=gcr.io                          -DartefactVersion=v0.0.3 -DversionInDocker=v0.0.3 -DdockerPackageName=akkahttp-playground-gproj/akkahttp-playground [sbt command]
 
 sbt -DuberjarName=uberjar.jar assembly 
 */
