@@ -378,6 +378,8 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
   {"status":"is up"}
   {"msg":"my msg"}
   ```
+##### blog post
+http://www.lotharschulz.info/2016/12/29/ingress-kubernetes-akkahttp-as-docker-image-on-google-cloud-platform/
 
 
 #### uberjar - docker images
