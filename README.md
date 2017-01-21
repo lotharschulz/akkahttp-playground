@@ -253,7 +253,7 @@ Connected to 192.168.99.100 (192.168.99.100) port 8181 (#0)
 ##### blog post
 http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 
-#### gcloud / kubernetes - work in progress
+#### gcloud / kubernetes
 
 - follow steps to [http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster](http://kubernetes.io/docs/hellonode/#create-your-kubernetes-cluster)
   - gcloud brings its own kubernetes, make sure an existing kubernetes does not cause conflicts
