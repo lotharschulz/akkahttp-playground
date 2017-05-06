@@ -1,6 +1,6 @@
 # Scala based on Java 8
 
-FROM lotharschulz/java08:0.0.4
+FROM lotharschulz/java08:0.0.5
 MAINTAINER Lothar Schulz <mail@lothar-schulz.info>
 
 ENV SCALA_VERSION 2.11.8

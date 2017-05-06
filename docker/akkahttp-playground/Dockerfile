@@ -1,4 +1,4 @@
-FROM lotharschulz/scala:0.0.4
+FROM lotharschulz/scala:0.0.5
 MAINTAINER Lothar Schulz <mail@lothar-schulz.info>
 RUN mkdir -p /akkahttp-playground
 WORKDIR /akkahttp-playground
