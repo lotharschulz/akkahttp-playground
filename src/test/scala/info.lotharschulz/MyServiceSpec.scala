@@ -34,7 +34,7 @@ class MyServiceSpec extends FlatSpec with Matchers with BeforeAndAfterAll with S
     }
   }
 
-  "MyServiceSpec POST on /hello withdefined msg" should "should return the posted msg" in {
+  "MyServiceSpec POST on /hello with predefined msg" should "should return the posted msg" in {
     val httpRequest = HttpRequest(
       method = HttpMethods.POST, 
       uri = "/hello",
