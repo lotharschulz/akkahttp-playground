@@ -1,18 +1,18 @@
 import com.typesafe.sbt.SbtNativePackager.autoImport._
 import sbt.Keys._
 
-lazy val scalacheck = "org.scalacheck" %% "scalacheck" % "1.12.0"
+lazy val scalacheck = "org.scalacheck" %% "scalacheck" % "1.13.5"
 
 libraryDependencies ++= {
   Seq(
     // http://stackoverflow.com/a/34570734
-     "org.scala-lang"         % "scala-reflect"  % "2.11.8"
-    ,"org.scala-lang.modules" % "scala-xml_2.11" % "1.0.5"
+     "org.scala-lang"         % "scala-reflect"    % "2.11.8"
+    ,"org.scala-lang.modules" % "scala-xml_2.11"   % "1.0.5"
 
-    ,"com.typesafe.akka" %% "akka-http-core"                    % "2.4.11"
-    ,"com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.11"
-    ,"com.typesafe.akka" %% "akka-http-testkit"                 % "2.4.11"
-    ,"org.scalatest"     %% "scalatest"                         % "3.0.1"
+    ,"com.typesafe.akka" %% "akka-http-core"       % "10.0.6"
+    ,"com.typesafe.akka" %% "akka-http-spray-json" % "10.0.6"
+    ,"com.typesafe.akka" %% "akka-http-testkit"    % "10.0.6"
+    ,"org.scalatest"     %% "scalatest"            % "3.0.3"
   )
 }
 
