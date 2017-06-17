@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
     - name: "akkahttpplayground"
-      image: "localhost:5000/akkahttp-playground:0.0.1"
+      image: "localhost:5000/akkahttp-playground:0.0.5"
       imagePullPolicy: "Never"
       ports:
         - containerPort: 8181
