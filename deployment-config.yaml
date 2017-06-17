@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "akkahttpplayground-deployment"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "akkahttpplayground-app"
+    spec:
+      containers:
+      - name: "akkahttpplayground-container"
+        image: "localhost:5000/akkahttp-playground:0.0.5"
+        ports:
+        - containerPort: 8181
