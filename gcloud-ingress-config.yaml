@@ -6,16 +6,3 @@ spec:
   backend:
     serviceName: "akkahttpplayground-service"
     servicePort: 8181
-#apiVersion: extensions/v1beta1
-#kind: Ingress
-#metadata:
-#  name: "akkahttpplayground-ingress"
-#spec:
-#  rules:
-#  - http:
-#      paths:
-#      - path: /hello
-#        backend:
-#          serviceName: "akkahttpplayground-service"
-#          servicePort: 8181
-#          #servicePort: 80    #
