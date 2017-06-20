@@ -309,7 +309,7 @@ http://www.lotharschulz.info/2016/10/19/akkahttp-docker-kubernetes/
 
 - create kubectl deployment
   ```
-  kubectl create -f gcloud-deployment-config.yaml --record
+  kubectl create -f gcloud-deployment-config.yaml
   # kubectl run akkahttpplayground-pod --image=push gcr.io/$PROJECT_ID/akkahttp-playground:v0.0.5 --port=8181
   # kubectl delete deployment akkahttpplayground-deployment
   ```
